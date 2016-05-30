@@ -373,7 +373,7 @@ if (targetOrigin === 'sophora://picker') {
     </div>
 
 
-    <img class="zdf-logo" src="payload/images/ZDF.svg" alt="ZDF Logo"></a>
+    <img class="zdf-logo" src="payload/images/zdf.svg" alt="ZDF Logo"></a>
 
     <script src="lib/js/trianglify.min.js"></script>
     <script src="lib/js/head.min.js"></script>
@@ -399,22 +399,63 @@ if (targetOrigin === 'sophora://picker') {
       });
     </script>
     <script>
-    var pattern = Trianglify({
-        width: window.innerWidth,
-        height: window.innerHeight,
-        cell_size: 50 + Math.random() * 50,
-        x_colors: ["#d9d9d9","#d9d9d9","#bdbdbd","#969696","#737373","#525252","#252525","#000000"],
-        
-        
-    });
-    var svgp = pattern.svg();
-    svgp.setAttribute('xmlns','http://www.w3.org/2000/svg');
-    
-    var mySVG64 = window.btoa(svgp.outerHTML);
-    document.getElementsByTagName("body")[0].style.backgroundImage = "url('data:image/svg+xml;base64,"+mySVG64+"')";
-    //document.body.insertBefore(svgp, document.body.firstChild);
 
 
+      document.addEventListener( 'keydown', onDocumentKeyDownEx, false );
+      function onDocumentKeyDownEx( event ) {
+
+          var triggered = false;
+
+          // 2. System defined key bindings
+          if( triggered === false ) {
+
+            // Assume true and try to prove false
+            triggered = true;
+
+            switch( event.keyCode ) {
+              // f
+              case 70: setTimeout(function(){
+                loadbg();
+              },1000); break;
+              default:
+                triggered = false;
+            }
+
+          }
+
+          // If the input resulted in a triggered action we should prevent
+          // the browsers default behavior
+          if( triggered ) {
+            event.preventDefault && event.preventDefault();
+          }
+          // ESC or O key
+          else if ( ( event.keyCode === 27 ) ) {
+            
+            setTimeout(function(){
+                loadbg();
+              },1000); 
+            event.preventDefault && event.preventDefault();
+          }
+
+        }
+
+    function loadbg(){
+
+      var pattern = Trianglify({
+          width: window.innerWidth,
+          height: window.innerHeight,
+          cell_size: 50 + Math.random() * 50,
+          x_colors: ["#d9d9d9","#d9d9d9","#bdbdbd","#969696","#737373","#525252","#252525","#000000"]
+      });
+      var svgp = pattern.svg();
+      svgp.setAttribute('xmlns','http://www.w3.org/2000/svg');
+      
+      var mySVG64 = window.btoa(svgp.outerHTML);
+      document.getElementsByTagName("body")[0].style.backgroundImage = "url('data:image/svg+xml;base64,"+mySVG64+"')";
+      //document.body.insertBefore(svgp, document.body.firstChild);
+    }
+
+    loadbg();
 
     </script>
   </body>
