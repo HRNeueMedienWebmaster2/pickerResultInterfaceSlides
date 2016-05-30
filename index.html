@@ -23,35 +23,78 @@
   </head>
   <body>
     <div class="reveal">
+      <img class="zdf-logo" src="payload/images/zdf.svg" alt="ZDF Logo"></a>
       <div class="slides">
         <section> <!-- 1 -->
           <h2>Wie funktioniert das Picker Interface?</h2>
+          <h4>für das Webmaster JF am 30.05.2016</h4>
+          <h5>von Ronny Adams</h5>
+
+          <aside class="notes">
+            Ich möchte euch heute die Funktionsweise der PickerSchnittstelle näher bringen.
+          </aside>
+          Navigation
+          <img id="keys" src="payload/images/keys.svg">
+          <div class="block1">
+            <span class="notesspace">Anmerkungen</span>
+            <span class="notes">S</span>            
+          </div>
+          <div class="block1">
+            <span class="notesspace">Vollbild</span>
+            <span class="notes">F</span>
+          </div>
         </section><!-- 1 ende -->
         
         <section> <!-- 2 -->
             <section> <!-- 2.a -->
               Das Picker Interface bildet eine Schnittstelle zwischen dem Host<br>            
               (Coremedia oder Sophora) und einem Drittsystemen.
+              <aside class="notes">
+                Der Picker ist eine Schnittstelle zwischen P12 und einem Drittsystem.
+              </aside>              
             </section>
             <section data-transition="slide-in fade-out"> <!-- 2.b -->
               <img data-src="payload/images/p12leer.png">
+              <aside class="notes">
+                Damit kann P12 um Funktionen erweitert werden, ohne an P12 selbst Änderungen vornehmen zu müssen.
+                Wie in diesem Beispiel, wo eine P12 Seite um Social Media Elemente erweitert wird.
+              </aside>              
             </section>
             <section data-transition="fade-in slide-out"> <!-- 2.c -->
               <img data-src="payload/images/p12voll.png">
+              <aside class="notes">
+                Daneben gibt es weitere Picker für
+                den Imperia Eventcontainer,
+                das Wetter Modul,
+                oder auch für ZDF Vote.
+
+                - Chats&amp;Foren
+                - Social Media Overlay
+                - Wahltool              
+              </aside>
             </section>          
         </section> <!-- 2 ende -->
 
         <section> <!-- 3 -->
             <section> <!-- 3.a -->
             Installation eines Picker basierten Angebots in P12 und Sophora
+            <aside class="notes">
+              Um einen Picker in P12 oder Sophora verwenden zu können muss er zuerst in den jeweiligen Systemen bekannt gemacht werden.
+            </aside>
             </section>
             <section> <!-- 3.b -->
               <p>P12 Editor</p>
               <img data-src="payload/images/p12_service.png">
+              <aside class="notes">
+              Im P12 Editor wird hierfür ein neuer Container Service angelegt. Der grün hervorgehobene Bereich kennzeichnet die URL des Pickers.
+              </aside>
             </section>
             <section> <!-- 3.c -->
               <p>Sophora Administration</p>
               <img data-src="payload/images/sophora_service.png">
+              <aside class="notes">
+              Unter Sophora wird der Picker als &quot;Externer Dienst&quot; angelegt. Auch hier kennzeichnet der grün hervorgehobene Bereich die URL des Pickers.
+              </aside>
             </section>          
         </section><!-- 3 ende -->
 
@@ -59,6 +102,9 @@
         <section> <!-- 4 -->
           <section>
             <h2>Wie wird der Picker implementiert?</h2>
+            <aside class="notes">
+            Wie erstelle ich ein Picker fähiges Angebot?
+            </aside>
           </section>
 
           <section data-transition="slide-in fade-out">
@@ -85,6 +131,10 @@
     &lt;/body&gt;
 &lt;/html&gt;
             </code></pre>
+            <aside class="notes">
+            Hier ist der HTML Code einer einfachen Meme Auswahl.
+            Die Seite lädt über eine Rest API eine Liste mit Memes von imgflip.com
+            </aside>
           </section>
 
           <section data-transition="fade-in slide-out">
@@ -111,11 +161,15 @@
     &lt;/body&gt;
 &lt;/html&gt;
             </code></pre>
+            <aside class="notes">In der dritten Zeile von unten wird die &quot;pickerResultInterface.js&quot; Datei eingebunden.
+            </aside>
           </section>
 
           <section>
             Meme Demo Picker
-            <img data-src="payload/images/memeDemo.png">
+            <img data-src="payload/images/memedemo.png">
+            <aside class="notes">
+            So sieht der Meme Picker aus. Mit der Maus wird eines der Bilder ausgewählt.  Danach kann der Benutzer auf &quot;Save&quot; clicken und damit die Übertragung an den Host starten.</aside>
           </section>
 
           <section>
@@ -148,6 +202,10 @@ function save(meme, $btn){
     PickerResultInterface.sendResult(res);            
 }
             </code></pre>
+            <aside class="notes">
+            Die vom Save Button ausgelöste Funktion bereitet das vom Host erwartete JSON Document vor.<br>
+            Zum Schluss wir das &quot;res&quot; Object an die &quot;sendResult&quot; Funktion des Picker Interfaces übergeben.
+            </aside>
           </section>
 
         </section><!-- 4 ende -->
@@ -155,6 +213,7 @@ function save(meme, $btn){
         <section><!-- 5 -->
           <section>
             <h2>Aufbau der pickerResultInterface.js</h2>
+            <aside class="notes">Jetzt zeige ich euch den grundlegenden Aufbau des pickerResultInterfaces.</aside>
           </section>
 
           <section>
@@ -180,8 +239,12 @@ function IPickerResult() {
                 <pre><code data-trim class="highlight javascript">
                   targetOrigin == "https://int.zdf.de"
                 </code></pre>      
-          </span> 
-
+          </span>
+          <aside class="notes">
+            Ohne den Target Origin Parameters geht nichts. KEYDOWN
+            Der Parameter, hier blau, wird vom Host System an die URL des Drittsystems angehängt. Der Picker extrahiert diese Information. KEYDOWN
+            Ohne diesen Parameter wäre später nicht klar, wohin er sein Ergebnis schicken soll.
+          </aside>
         </section>
         
         <section>
@@ -210,6 +273,7 @@ getvars = {
           }
             </code></pre>      
           </span>
+          <aside class="notes">Im laufe der Zeit wurde der Picker erweitert um z.B. auch in Imperia verwendet werden zu können. Dazu ist es erforderlich, Parameter die Imperia an das Drittsystem übergibt, später im Picker Result wieder zurück an das Host System zu senden. KEYDOWN Diese Beispiel-Parameter &quot;flex_modul&quot;, &quot;flex_index&quot; und &quot;preview&quot; werden aus der URL ausgelesen und in die &quot;getvars&quot; Variable geschrieben.  Zu diesem Zeitpunkt sind alle für den Picker erforderlichen Daten vorhanden.</aside>
         </section>
 
         <section>
@@ -236,6 +300,12 @@ this.sendResult = function sendResult(result, done) {
 
     console.re.log(resultString);
           </code></pre>
+          <aside class="notes">
+          Die Funktion &quot;sendResult&quot; ergänzt die &quot;result&quot; Variable um die Daten aus der &quot;getvars&quot; Variablen.
+          (4. Zeile von unten)
+          Anschließend wird das &quot;result&quot; Object serialisiert, also in einen String umgewandelt.
+          Das ist erforderlich, da nur Texte und keine Objecte an das Host System übertragen werden können.           
+          </aside>
         </section>
 
         <section>
@@ -263,6 +333,10 @@ this.sendResult = function sendResult(result, done) {
   }
 }
             </code></pre>
+            <aside class="notes">
+            So sieht der Fertige Text aus.
+            Auf dem Host System kann daraus einfach wieder ein Object erstellt werden.
+            </aside>
           </section>
 
           <section>
@@ -283,19 +357,29 @@ if (targetOrigin === 'sophora://picker') {
     parent.postMessage(resultString, targetOrigin);
 }
             </code></pre>
+            <aside class="notes">
+            An dieser Stelle wird das Ergebnis, je nach Host (P12 bzw Imperia und Sophora), an eine andere Funktion übergeben.
+
+            Das Sophora Browser Widget implementiert eine eigene Funktion die den &quot;Picker Result String&quot; erwartet.
+
+            P12 oder Imperia laden das Drittsystem in einem iFrame und können daher mit der &quot;PostMessage&quot; Funktion angesprochen werden.              
+            </aside>
           </section>
 
           <section>
             <h2>Die Daten wurden an das Hostsystem übertragen.</h2>
+            <aside class="notes">Die Daten sind jetzt dem Host System angekommen.</aside>
           </section>
 
           <section>
             <h2>P12 schließt das iFrame</h2>
+            <aside class="notes">P12 schließt das iFrame nachdem es die Daten erhalten hat.</aside>
           </section>
 
           <section>
               <h2>Der Sophora Client blendet eine entsprechende Meldung ein</h2>
               <img data-src="payload/images/sophoravoll.png">
+              <aside class="notes">Unter Sophora wird eine Meldung eingeblendet. Das Fenster verändert sich nicht. Es ist möglich diese Meldung zu unterdrücken und statt dessen im Drittsystem anzuzeigen. Wie das geht steht es in der Picker Doku.</aside>
           </section>
 
         </section><!-- 5 ende -->
@@ -304,11 +388,13 @@ if (targetOrigin === 'sophora://picker') {
         <section><!-- 6 -->
 
           <section>
-            <h2>Was muss ich tun?</h2>              
+            <h2>Was muss ich tun?</h2>
+            <aside class="notes">Was muss ich tun, oder besser was haben wir getan um die alten Picker für Sophora kompatibel zu machen?</aside>              
           </section>
 
           <section>
             <h2>URL austauschen</h2>
+            <aside class="notes">Die URL der bisher verwendeten PickerResult.js durch die neue ersatzen.</aside>
           </section>          
 
           <section>
@@ -316,6 +402,7 @@ if (targetOrigin === 'sophora://picker') {
             <pre><code data-trim class="highlight html">
 &lt;script src=&quot;http://cm2-prod-pre.zdf.de/studio/pickerResultInterface.js&quot;&gt;&lt;/script&gt;
             </code></pre>
+            <aside class="notes"></aside>
           </section>
 
           <section> 
@@ -323,10 +410,12 @@ if (targetOrigin === 'sophora://picker') {
             <pre><code data-trim class="highlight html">
 &lt;script src=&quot;//static.zdf.de/libs/js/pickerResultInterface.min.js&quot;&gt;&lt;/script&gt;
             </code></pre>
+            <aside class="notes"></aside>
           </section>   
 
           <section> 
             <h2>Fertig</h2>
+            <aside class="notes">Da der Picker abwärtskompatibel ist müssen keine Änderungen am eigenen Drittsystem vorgenommen werden.</aside>
           </section>   
 
         </section><!-- 6 ende -->
@@ -345,7 +434,8 @@ if (targetOrigin === 'sophora://picker') {
             <span class="fragment fade-in">
                 <h4>SVN</h4>
                 https://svn.zdf.de/repos/Webmaster/PickerResultInterface
-            </span>          
+            </span>
+            <aside class="notes"></aside>          
           </section>
         </section><!-- 7 ende -->
 
@@ -354,6 +444,7 @@ if (targetOrigin === 'sophora://picker') {
         <section>
           <section>
             <h2>Fragen?</h2>
+            <aside class="notes">Hat jemand noch Fragen?</aside>
           </section>
 
           <section>
@@ -362,6 +453,13 @@ if (targetOrigin === 'sophora://picker') {
             <li>Keine Popup/Tabs -> Imperia Picker ohne Vorschau</li>
             <li>Keine Developer Tools -> kein Debugging -> remote Debugging (http://console.re/)</li>
             </ul>
+            <aside class="notes">
+            Der Desktop Client ist ein Java Programm das keinen vollständigen Browser beinhaltet.
+            Daher lassen sich manche Funktionen der Drittsysteme nicht nutzen.
+              Keine Popup/Tabs -> Imperia Picker ohne Vorschau            
+            Das Fehlen der Developer Tools erschwert das Debugging.
+              Keine Developer Tools -> kein Debugging -> remote Debugging (http://console.re/)              
+            </aside>
           </section>
         </section>
         
@@ -369,11 +467,10 @@ if (targetOrigin === 'sophora://picker') {
           <h2>Vielen Dank!</h2>
           <img class="fritz" data-src="payload/images/fritz.png">
         </section>
-      </div>
+      </div>      
     </div>
 
 
-    <img class="zdf-logo" src="payload/images/zdf.svg" alt="ZDF Logo"></a>
 
     <script src="lib/js/trianglify.min.js"></script>
     <script src="lib/js/head.min.js"></script>

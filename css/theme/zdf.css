@@ -1,10 +1,10 @@
 .zdf-logo{
     position: absolute;
     top: 0;
-    right: 0;
+    left: 0;
     border: 0;
-    width: 149px;
-    margin: 10px 10px 0 0;
+    width: 12% !important;
+    margin: 10px 0 0 10px !important;
 }
 
 
@@ -35,10 +35,47 @@
 
 
 img.fritz {
-    margin: 15px 0px !important;
-    background: rgba(255, 255, 255, 0) !important;
-    border: none !important;
-    box-shadow: none !important;
+  margin: 15px 0px !important;
+  background: rgba(255, 255, 255, 0) !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+img#keys{
+  padding-top: 10px;
+  
+  width: 160px;
+  margin: 0 auto !important;
+  background: rgba(255, 255, 255, 0) !important;
+  border: none !important;
+  box-shadow: none !important;  
+  display: block;
+}
+span.notes{
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    border-color: black;
+    background-color: black;
+    color: grey;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    font-size: 1em;
+    font-family: monospace;
+}
+
+span.notesspace{
+  display: block;
+  
+  padding-bottom: 10px;  
+  padding-top: 22px;  
+}
+
+.block1{
+  width: 350px;
+  display: inline-block;
+  margin: 0 10px;
 }
 
 /**
